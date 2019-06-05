@@ -33,4 +33,4 @@ Learn more about **tokens** in the [Microsoft Identity Platform Developer Glossa
 
 Learn more about **Confidential and Public Clients** in [this article](https://winsmarts.com/confidential-client-vs-public-client-19068b308d91).
 
-Learn more about the different **grant types** in OAuth in [this article](https://winsmarts.com/oauth2-flows-926d422d5018) or by checking out Microsoft's in-depth overviews on each one [here]() and navigating through them in the navigation pane on the left side.
+Learn more about the different **grant types** in OAuth in [this article](https://winsmarts.com/oauth2-flows-926d422d5018) or by checking out Microsoft's in-depth overviews on each one [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-implicit-grant-flow) and navigating through them in the navigation pane on the left side.
