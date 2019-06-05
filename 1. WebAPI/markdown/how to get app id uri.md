@@ -1,5 +1,5 @@
 # How to find your App ID URI
-### This briefly explains how to find your registered app's `<app_id_uri>` value for use in this WebAPI scenario.
+This briefly explains how to find your registered app's `<app_id_uri>` value for use in this WebAPI scenario.
 
 1. Open your [Azure portal](https://portal.azure.com/) and switch into the tenant/domain where your app was registered.
 2. In the left panel click on __Azure Active Directory__, and then __App registrations__, and finally on your chosen registered app name.
