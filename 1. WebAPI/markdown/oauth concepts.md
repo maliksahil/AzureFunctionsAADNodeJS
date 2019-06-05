@@ -27,8 +27,10 @@ There are many ways to get access tokens in OAuth2, called grants. Different app
     Used for clients with very limited UI's (i.e. an appliance)
 
 ## More Resources
-Learn more about **tokens** in the [Microsoft Identity Platform Developer Glossary](https://docs.microsoft.com/en-us/azure/active-directory/develop/developer-glossary#security-token) and in [this article](https://winsmarts.com/access-tokens-and-refresh-tokens-and-id-tokens-5261bc26e8a2).
+The Microsoft Azure docs also provide really great resources for [OAuth2](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-protocols) and [OpenID Connect](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-protocols-oidc) - especially useful because they're explained in the context of Azure AD.
+
+Learn more about **tokens** in the [Microsoft Identity Platform Developer Glossary](https://docs.microsoft.com/en-us/azure/active-directory/develop/developer-glossary#security-token) and in [this article](https://winsmarts.com/access-tokens-and-refresh-tokens-and-id-tokens-5261bc26e8a2). Microsoft's Azure identity platform docs also include some more in-depth material on [ID tokens](https://docs.microsoft.com/en-us/azure/active-directory/develop/id-tokens) and [access tokens](https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens).
 
 Learn more about **Confidential and Public Clients** in [this article](https://winsmarts.com/confidential-client-vs-public-client-19068b308d91).
 
-Learn more about the different **grant types** in OAuth [here](https://winsmarts.com/oauth2-flows-926d422d5018).
+Learn more about the different **grant types** in OAuth in [this article](https://winsmarts.com/oauth2-flows-926d422d5018) or by checking out Microsoft's in-depth overviews on each one [here]() and navigating through them in the navigation pane on the left side.
