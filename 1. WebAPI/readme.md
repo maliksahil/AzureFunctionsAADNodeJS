@@ -19,6 +19,8 @@ But before we do either of these, we will need an AAD app that will act as the f
 
 ## Register an AAD App
 
+Reference: [How to register an app](https://docs.microsoft.com/en-nz/azure/active-directory/develop/quickstart-register-app)
+
 The Azure function acts as a WebAPI. 
 
 Register a new app, with the following redirect URIs,
@@ -37,12 +39,13 @@ Note down it's application id. I will refer to this application id as `client_id
 
 Also choose to generate a client secret - save it somewhere, you'll need it soon.
 
-Also save the app id URI of this app.
+Also save the app id URI of this app. 
+[How to get the AppID URI]('./glossary/how to get app id uri.md')
 
 ## Author the project
 
 1. First create a new project `func init SecureAPI`, choose to `node` as your worker runtime, and `JavaScript` as the language
-2. Next open this folder in VSCode, and choose to add a new function as shown below.
+2. Next open this folder in VSCode, and choose to add a new function as shown below. You may be asked to intialize the project for VSCode, choose yes.
  ![Create New Function](images/createnewfunction.png)
   
  This will ask you to initialize the project for use with VSCode, choose Yes.
@@ -73,12 +76,15 @@ const createHandler = require("azure-function-express").createHandler;
 const express = require("express");
 const passport = require('passport');
 
-var BearerStrategy = require("passport-azure-ad").BearerStrategy;
+var tenantID = "<tenantid>";
+var clientID = "<clientid>";
+var appIdURI = "<appiduri>";
+
 var options = {
-    identityMetadata: "https://login.microsoftonline.com/<tenantid>/v2.0/.well-known/openid-configuration",
-    clientID: "<client_id_api>",
-    issuer: "https://sts.windows.net/<tenantid>/",
-    audience: "<app_id_uri>",
+    identityMetadata: "https://login.microsoftonline.com/" + tenantID + "/v2.0/.well-known/openid-configuration",
+    clientID: clientID,
+    issuer: "https://sts.windows.net/" + tenantID + "/",
+    audience: appIdURI,
     loggingLevel: "info",
     passReqToCallback: false
 };
@@ -90,24 +96,9 @@ var bearerStrategy = new BearerStrategy(options, function (token, done) {
 const app = express();
 
 app.use(require('morgan')('combined'));
-app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ 
-  secret: 'keyboard cat', 
-  resave: true, 
-  saveUninitialized: true }));
+app.use(require('body-parser').urlencoded({"extended":true}));
 app.use(passport.initialize());
 passport.use(bearerStrategy);
-
-// Enable CORS for * because this is a demo project
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Authorization, Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-});
 
 // This is where your API methods are exposed
 app.get(
@@ -115,9 +106,9 @@ app.get(
     passport.authenticate("oauth-bearer", { session: false }),
     function (req, res) {
         var claims = req.authInfo;
-        console.log("User info: ", req.user);
-        console.log("Validated claims: ", claims);
-        res.status(200).json({ name: claims["name"] });
+        console.log("Validated claims: ", JSON.stringify(claims));
+        console.log("body text: ", JSON.stringify(req.body));
+        res.status(200).json(claims);
     }
 );
 
@@ -157,7 +148,7 @@ The main changes done here are as follows,
  1. With the project open in VSCode, just hit F5, or you can also run `func host start` from the CLI.
  2. You will need an access token to call this function. In order to get the access token, open browser in private mode and visit
  ```
- https://login.microsoftonline.com/<tenant_name>.onmicrosoft.com/oauth2/v2.0/authorize?response_type=code&client_id=<client_id_api>&redirect_uri=https://<yournodejsfunction>.azurewebsites.net/callback&scope=openid
+ https://login.microsoftonline.com/<tenant_name>.onmicrosoft.com/oauth2/v2.0/authorize?response_type=code&client_id=<client_id_api>&redirect_uri=http://localhost:7071/callback&scope=openid
 ```
 
 This will prompt you to perform authentication, and it will return a code. 
@@ -173,7 +164,7 @@ curl -X POST \
   -H 'Host: login.microsoftonline.com' \
   -H 'accept-encoding: gzip, deflate' \
   -H 'cache-control: no-cache' \
-  -d 'redirect_uri=https%3A%2F%2F<yournodejsfunction>.azurewebsites.net%2Fcallback&client_id=<client_id_api>&grant_type=authorization_code&code=<put code here>&client_secret=<put client secret here>&scope=https%3A%2F%2Fmytestapp.<tenant_name>.onmicrosoft.com%2F.default'
+  -d 'redirect_uri=http%3A%2F%2Flocalhost:7071%2Fcallback&client_id=<client_id_api>&grant_type=authorization_code&code=<put code here>&client_secret=<put client secret here>&scope=https%3A%2F%2Fmytestapp.<tenant_name>.onmicrosoft.com%2F.default'
   ```
  
  3. Once you get the access token, make a GET request to `http://localhost:7071/api` with the access token as a Authorization Bearer header. Verify that you get the following output - 
