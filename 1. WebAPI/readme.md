@@ -177,10 +177,33 @@ curl -X POST \
   ```
  
  3. Once you get the access token, make a GET request to `http://localhost:7071/api` with the access token as a Authorization Bearer header. Verify that you get the following output - 
- ```
- {
-    "name": "adminuser"
- }
+ ``` JSON
+{
+    "aud": "https://mytestapp1.<tenant>.onmicrosoft.com",
+    "iss": "https://sts.windows.net/<tenantid>/",
+    "iat": 1560349450,
+    "nbf": 1560349450,
+    "exp": 1560353350,
+    "acr": "1",
+    "aio": "..removed..",
+    "amr": [
+        "pwd"
+    ],
+    "appid": "<clientid>",
+    "appidacr": "1",
+    "email": "..removed..",
+    "family_name": "Malik",
+    "given_name": "Sahil",
+    "idp": "live.com",
+    "ipaddr": "<removed..>",
+    "name": "Sahil Malik",
+    "oid": "<..removed..>",
+    "sub": "<..removed..>",
+    "tid": "<tenantid>",
+    "unique_name": "..removed..",
+    "uti": "..removed..",
+    "ver": "1.0"
+}
 ```
 
  ## Test your function - in Azure
@@ -210,8 +233,31 @@ curl -X POST \
   ```
  
  3. Once you get the access token, make a GET request to `https://<yournodejsfunction>.azurewebsites.net/api` with the access token as a Authorization Bearer header. Verify that you get the following output - 
- ```
- {
-    "name": "adminuser"
- }
+ ``` JSON
+{
+    "aud": "https://mytestapp1.<tenant>.onmicrosoft.com",
+    "iss": "https://sts.windows.net/<tenantid>/",
+    "iat": 1560349450,
+    "nbf": 1560349450,
+    "exp": 1560353350,
+    "acr": "1",
+    "aio": "..removed..",
+    "amr": [
+        "pwd"
+    ],
+    "appid": "<clientid>",
+    "appidacr": "1",
+    "email": "..removed..",
+    "family_name": "Malik",
+    "given_name": "Sahil",
+    "idp": "live.com",
+    "ipaddr": "<removed..>",
+    "name": "Sahil Malik",
+    "oid": "<..removed..>",
+    "sub": "<..removed..>",
+    "tid": "<tenantid>",
+    "unique_name": "..removed..",
+    "uti": "..removed..",
+    "ver": "1.0"
+}
 ```
