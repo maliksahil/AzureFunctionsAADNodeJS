@@ -8,7 +8,7 @@ This scenario allows for the delay to be any length (less than the 7 day Azure S
 
 The key to making this work are in taking advantage of Azure's **Durable Functions** and **Token Store**. 
 - [Durable Functions](https://docs.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview) are an extension of Azure Functions, allowing you to define stateful workflows using the concept of an [orchestrator function](https://docs.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-types-features-overview). A couple use cases are running functions on a timer or delay and orchestrating multiple azure functions to run in parallel.
-- Token Store (in Private Preview at time of writing) is a service that manages tokens for you and allow for you to always get a "fresh" access token for a configured app service (like an API). It handles refreshing and getting new access tokens for you, so you only need to request a specific token resource to retrieve a valid access token.
+- Token Store (in Private Preview at time of writing) is a service that manages tokens for you and allows for you to always get a "fresh" access token for a configured app service (like an API). It handles refreshing and getting new access tokens for you, so you only need to request a specific token resource to retrieve a valid access token.
 
 ## The detailed flow will be as follows
 1. **User** logs into **WebApp**
