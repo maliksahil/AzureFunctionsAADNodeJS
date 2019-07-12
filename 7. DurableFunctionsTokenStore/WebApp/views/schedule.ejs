@@ -1,0 +1,10 @@
+<% if (!user) { %>
+	<h2>Welcome! Please log in.</h2>
+	<a href="/login">Log In</a>
+<% } else { %>
+<h2>Schedule API Call</h2>
+<p>API Response:</p>
+<a href="<%= apiResponse %>">Call API</a>
+<p></p>
+<a href="/logout">Log Out</a>
+<% } %>

@@ -1,0 +1,18 @@
+{
+    "dependencies": {
+        "azure-function-express": "^2.0.0",
+        "azure-functions-core-tools": "^2.5.553",
+        "bluebird": "^3.5.5",
+        "body-parser": "^1.18.3",
+        "connect-ensure-login": "^0.1.1",
+        "cookie-parser": "^1.4.4",
+        "durable-functions": "^1.2.2",
+        "ejs": "^2.6.1",
+        "express": "^4.16.4",
+        "express-session": "^1.15.6",
+        "moment": "^2.24.0",
+        "morgan": "^1.9.1",
+        "passport": "^0.4.0",
+        "passport-azure-ad": "^4.0.0"
+    }
+}

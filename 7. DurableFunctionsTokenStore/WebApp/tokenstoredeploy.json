@@ -1,0 +1,77 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "tokenStoreName": {
+            "type": "string",
+            "defaultValue": "<token-store-name>",
+            "metadata": {
+                "description": "Name of the Token Store resource to be created"
+            }
+        },
+        "tokenStoreLocation": {
+            "type": "string",
+            "defaultValue": "West Central US",
+            "allowedValues": [
+                "West Central US"
+            ],
+            "metadata": {
+                "description": "Azure location where the Token Store resource will be deployed"
+            }
+        }
+    },
+    "variables": {
+        "tokenStoreResourceId": "[resourceId('Microsoft.Token/stores/', parameters('tokenStoreName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Token/stores",
+            "name": "[parameters('tokenStoreName')]",
+            "apiVersion": "2018-08-01-preview",
+            "location": "[parameters('tokenStoreLocation')]",
+            "properties": {
+                "authorizedPostRedirectUrls": []
+            },
+            "dependsOn": [],
+            "resources": [
+                {
+                    "type": "services",
+                    "name": "<token-store-service-name>",
+                    "apiVersion": "2018-08-01-preview",
+                    "properties": {
+                        "displayName": "Middle Tier API",
+                        "authentication": {
+                            "managedIdentityProvider": {
+                                "name": "oauth2generic"
+                            },
+                            "parameters": {
+                                "ClientId": "<web-app-client-id>",
+                                "ClientSecret": "<web-app-client-secret>",
+                                "AuthorizationUrlTemplate": "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize",
+                                "AuthorizationUrlQueryStringTemplate": "?client_id={ClientId}&response_type=code&redirect_uri={RedirectUrl}&response_mode=query&scope={Scopes}&state={State}",
+                                "TokenUrlTemplate": "https://login.microsoftonline.com/organizations/oauth2/v2.0/token",
+                                "TokenBodyTemplate": "client_id={ClientId}&scope={Scopes}&code={Code}&redirect_uri={RedirectUrl}&grant_type=authorization_code&client_secret={ClientSecret}",
+                                "RefreshUrlTemplate": "https://login.microsoftonline.com/organizations/oauth2/v2.0/token",
+                                "RefreshBodyTemplate": "client_id={ClientId}&scope={Scopes}&refresh_token={RefreshToken}&redirect_uri={RedirectUrl}&grant_type=refresh_token&client_secret={ClientSecret}",
+                                "Scopes": "<middle-tier-api-app-id-uri>/.default"
+                            }
+                        }
+                    },
+                    "dependsOn": [
+                        "[variables('tokenStoreResourceId')]"
+                    ],
+                    "resources": []
+                }
+            ]
+        }
+    ],
+    "outputs": {
+        "TokenStoreRedirectUri": {
+            "type": "string",
+            "value": "[reference(variables('tokenStoreResourceId'), '2018-08-01-preview').redirectUrl]",
+            "metadata": {
+                "description": "This URL must be whitelisted as a valid redirect URL in the services' app registrations"
+            }
+        }
+    }
+}
