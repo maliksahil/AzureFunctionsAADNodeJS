@@ -10,7 +10,7 @@
     "cookie-parser": "^1.4.3",
     "ejs": ">= 0.0.0",
     "ejs-locals": ">= 0.0.0",
-    "express": "3.x",
+    "express": "4.x",
     "express-session": "^1.14.1",
     "method-override": "^2.3.6",
     "mongoose": "^4.6.2",
